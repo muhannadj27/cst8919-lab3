@@ -1,0 +1,31 @@
+TEST CASE 2: Mandatory Tagging (Require-ProjectName-Tag)
+==========================================================
+Tested in an isolated scratch resource group (rg-cst8919-lab3-isolation-test, North
+Central US) with ONLY the Require-ProjectName-Tag policy assigned. This isolates the
+tag policy from the region-lockdown policy, which would otherwise deny every request
+in this subscription outside Canada Central (see note in README about the
+subscription's built-in region restriction).
+
+--- 2a. WITHOUT ProjectName tag -> DENIED ---
+Command:
+  az storage account create -n stcst8919lab3notag -g rg-cst8919-lab3-isolation-test -l northcentralus --sku Standard_LRS
+
+Result: DENIED
+ERROR: (RequestDisallowedByPolicy) Resource 'stcst8919lab3notag' was disallowed by policy.
+Policy: Require-ProjectName-Tag
+Evaluation detail:
+  expression: "tags['ProjectName']"
+  operator: "Exists", targetValue: "false", result: "True" -> deny effect triggered
+
+--- 2b. WITH ProjectName tag -> ALLOWED (control test) ---
+Command:
+  az storage account create -n stcst8919lab3tagok -g rg-cst8919-lab3-isolation-test -l northcentralus --sku Standard_LRS --tags ProjectName=CST8919Lab3
+
+Result: SUCCEEDED
+  Name: stcst8919lab3tagok
+  ProvisioningState: Succeeded
+  Location: northcentralus
+
+Conclusion: The Require-ProjectName-Tag policy correctly denies resources missing
+the tag and allows identical resources once the tag is added, confirming the policy
+condition is precise (not an overly broad deny).

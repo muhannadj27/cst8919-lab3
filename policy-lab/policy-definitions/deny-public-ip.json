@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "displayName": "Deny-Public-IP",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Prevents creation of Public IP addresses.",
+    "metadata": {
+      "category": "Compliance"
+    },
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Network/publicIPAddresses"
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}

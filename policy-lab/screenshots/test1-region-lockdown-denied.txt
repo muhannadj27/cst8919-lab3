@@ -1,0 +1,43 @@
+TEST CASE 1: Region Lockdown (Only-CanadaCentral)
+====================================================
+Command:
+  az storage account create -n stcst8919lab3region -g rg-cst8919-lab3 -l northcentralus --sku Standard_LRS --tags ProjectName=CST8919Lab3
+
+Note: North Central US was used in place of East US as the "wrong region" example.
+This Azure for Students subscription has a built-in, subscription-wide region
+restriction (policy assignment "sys.regionrestriction") that only permits deployments
+to: mexicocentral, westus3, norwayeast, northcentralus, southcentralus. East US is not
+among them, so North Central US was used instead to demonstrate the same scenario
+(a region other than Canada Central). The ProjectName tag was included so this test
+isolates the region policy specifically, ruling out the tag policy as the cause.
+
+Result: DENIED
+
+ERROR: (RequestDisallowedByPolicy) Resource 'stcst8919lab3region' was disallowed by policy.
+Policy identifiers: [{
+  "policyAssignment": {
+    "name": "MapleTech Secure Foundation",
+    "id": "/subscriptions/<sub-id>/resourceGroups/rg-cst8919-lab3/providers/Microsoft.Authorization/policyAssignments/MapleTech-Secure-Foundation-Assignment"
+  },
+  "policyDefinition": {
+    "name": "Only-CanadaCentral",
+    "id": "/subscriptions/<sub-id>/providers/Microsoft.Authorization/policyDefinitions/Only-CanadaCentral",
+    "version": "1.0.0"
+  },
+  "policySetDefinition": {
+    "name": "MapleTech Secure Foundation",
+    "id": "/subscriptions/<sub-id>/providers/Microsoft.Authorization/policySetDefinitions/MapleTech-Secure-Foundation",
+    "version": "1.0.0"
+  }
+}]
+
+Evaluation detail:
+  expression: "location"
+  expressionValue: "northcentralus"
+  targetValue: "canadacentral"
+  operator: "NotEquals"
+  result: "True"  -> deny effect triggered
+
+Conclusion: The Only-CanadaCentral custom policy correctly denied a resource
+deployed outside Canada Central, even though the ProjectName tag was present
+(confirming the region policy is what triggered the denial, not the tag policy).

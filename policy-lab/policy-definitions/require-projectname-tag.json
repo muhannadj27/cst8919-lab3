@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "displayName": "Require-ProjectName-Tag",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Requires all resources to include a ProjectName tag.",
+    "metadata": {
+      "category": "Compliance"
+    },
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "field": "tags['ProjectName']",
+        "exists": "false"
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}

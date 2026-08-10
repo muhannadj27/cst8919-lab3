@@ -1,0 +1,35 @@
+TEST CASE 3: Block Public IPs (Deny-Public-IP)
+=================================================
+Tested in an isolated scratch resource group (rg-cst8919-lab3-isolation-test, North
+Central US) with ONLY the Deny-Public-IP policy assigned, isolating it from the
+region-lockdown policy for the same reason described in test2 and the README.
+
+Command:
+  az network public-ip create -g rg-cst8919-lab3-isolation-test -n pip-cst8919-test2 -l northcentralus --tags ProjectName=CST8919Lab3
+
+Note: the resource was correctly tagged and in an otherwise-permitted region -
+the only reason for denial is the resource type itself (Microsoft.Network/publicIPAddresses).
+
+Result: DENIED
+
+ERROR: (RequestDisallowedByPolicy) Resource 'pip-cst8919-test2' was disallowed by policy.
+Policy identifiers: [{
+  "policyAssignment": {
+    "name": "Deny-Public-IP (isolation test)",
+    "id": "/subscriptions/<sub-id>/resourceGroups/rg-cst8919-lab3-isolation-test/providers/Microsoft.Authorization/policyAssignments/pip-policy-isolation-test"
+  },
+  "policyDefinition": {
+    "name": "Deny-Public-IP",
+    "id": "/subscriptions/<sub-id>/providers/Microsoft.Authorization/policyDefinitions/Deny-Public-IP",
+    "version": "1.0.0"
+  }
+}]
+
+Conclusion: The Deny-Public-IP policy correctly blocks creation of
+Microsoft.Network/publicIPAddresses resources regardless of tagging or region
+correctness, satisfying the "no public IPs" governance requirement.
+
+(First attempt without waiting for policy propagation succeeded and the public IP
+was immediately deleted - new Azure Policy assignments can take a few minutes to
+propagate to all resource providers before enforcement begins. After a short wait,
+the retry was denied as expected.)
