@@ -9,7 +9,7 @@ addresses.
 
 - Policy definitions: [`policy-lab/policy-definitions/`](policy-lab/policy-definitions/)
 - Test evidence: [`policy-lab/screenshots/`](policy-lab/screenshots/) (CLI output, see note below)
-- Video demo: **TODO — add your video link here**
+- Video demo: [https://youtu.be/9SOmQOYdLfg](https://youtu.be/9SOmQOYdLfg)
 
 ## Policies
 
@@ -57,9 +57,10 @@ Consequences:
   would deny *every* request made outside Canada Central regardless of tagging or
   resource type — masking whether the tag and public-IP policies were independently
   working. Testing them in isolation gives clean, unambiguous evidence that each
-  policy fires for its own specific reason. The scratch resource group and its
-  test-only policy assignments were deleted after testing; `rg-cst8919-lab3` and the
-  full `MapleTech Secure Foundation` initiative are the only artifacts that remain.
+  policy fires for its own specific reason. Portal screenshots of these isolated
+  test results were also captured from this scratch resource group's Activity Log;
+  it is a temporary testing aid only — `rg-cst8919-lab3` and the full `MapleTech
+  Secure Foundation` initiative are the artifacts that satisfy the lab requirement.
 - **Test 4 (the fully-compliant "Allowed" case) could not be physically
   demonstrated**, because it requires a real deployment to Canada Central, which
   this subscription cannot reach at all — every such attempt is blocked before
