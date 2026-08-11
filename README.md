@@ -11,19 +11,41 @@ addresses.
 - Test evidence: [`policy-lab/screenshots/`](policy-lab/screenshots/) — CLI transcripts (`.txt`) plus Azure Portal screenshots (`.png`), see note below
 - Video demo: [https://youtu.be/9SOmQOYdLfg](https://youtu.be/9SOmQOYdLfg)
 
-### Screenshot index
+### Screenshots
 
-| File | Shows |
-|---|---|
-| `08-policy-initiative.png` | The `MapleTech Secure Foundation` initiative with all 3 policies bundled |
-| `09-policy-definitions-list.png` | The 3 custom policy definitions in Policy \| Definitions |
-| `10-policy-assignment.png` | The initiative assigned to `rg-cst8919-lab3`, enforcement = Default |
-| `01-test-region-denied.png` | Wrong-region resource denied by `Only-CanadaCentral` |
-| `05-test-tag-denied.png` | Untagged resource denied by `Require-ProjectName-Tag` |
-| `02-test-publicip-denied.png` | Public IP denied by `Deny-Public-IP` |
-| `06-test-allowed.png` | Compliant resource — Succeeded, no policy violation |
+**Policy setup**
 
-(`03-`, `04-`, `07-` are alternate/duplicate captures of the same test cases above, kept for completeness.)
+The 3 custom policy definitions:
+
+![Policy definitions list](policy-lab/screenshots/09-policy-definitions-list.png)
+
+The `MapleTech Secure Foundation` initiative, all 3 policies bundled:
+
+![Initiative](policy-lab/screenshots/08-policy-initiative.png)
+
+The initiative assigned to `rg-cst8919-lab3`, enforcement = Default (enforced):
+
+![Assignment](policy-lab/screenshots/10-policy-assignment.png)
+
+**Test cases**
+
+`DENIED` — wrong region, blocked by `Only-CanadaCentral`:
+
+![Wrong region denied](policy-lab/screenshots/01-test-region-denied.png)
+
+`DENIED` — missing `ProjectName` tag, blocked by `Require-ProjectName-Tag`:
+
+![Missing tag denied](policy-lab/screenshots/05-test-tag-denied.png)
+
+`DENIED` — public IP address, blocked by `Deny-Public-IP`:
+
+![Public IP denied](policy-lab/screenshots/02-test-publicip-denied.png)
+
+`ALLOWED` — fully compliant resource, no policy violation:
+
+![Compliant resource allowed](policy-lab/screenshots/06-test-allowed.png)
+
+(`03-`, `04-`, `07-` in the screenshots folder are alternate/duplicate captures of the cases above, kept for completeness but not shown here.)
 
 ## Policies
 
